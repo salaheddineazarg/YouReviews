@@ -7,16 +7,17 @@ import com.example.youreviews.dto.User.UserDto;
 import com.example.youreviews.dto.User.UserDtoResponse;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IUser {
 
     List<UserDtoResponse> getAll();
 
-    UserDtoResponse addUser(UserDto userDto);
+    Optional<UserDtoResponse> addUser(UserDto userDto);
 
-    UserDtoResponse updateUser(UserDto userDto);
+   Optional<UserDtoResponse> updateUser(UserDto userDto);
 
-    UserDtoResponse getUserById(Long id);
+    Optional<UserDtoResponse> getUserById(Long id);
 
     int deleteUserById(Long id);
 }
