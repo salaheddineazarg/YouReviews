@@ -7,6 +7,7 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,7 +32,7 @@ public class User implements UserDetails {
     @Size(max = 255, message = "Full name must be less than or equal to 255 characters")
     private String fullName;
 
-
+    @Column(unique = true)
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid email address")
     private String email;
