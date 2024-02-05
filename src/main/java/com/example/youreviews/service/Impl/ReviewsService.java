@@ -4,7 +4,10 @@ package com.example.youreviews.service.Impl;
 import com.example.youreviews.dto.Reviews.ReviewsDto;
 import com.example.youreviews.dto.Reviews.ReviewsDtoResponse;
 import com.example.youreviews.entities.Reviews;
+import com.example.youreviews.entities.User;
 import com.example.youreviews.repositories.ReviewsRepository;
+import com.example.youreviews.repositories.UserRepository;
+import com.example.youreviews.security.SecurityUtil;
 import com.example.youreviews.service.Interfaces.IReviews;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +21,16 @@ import java.util.stream.Collectors;
 public class ReviewsService implements IReviews {
 
     private final ReviewsRepository reviewsRepository;
+    private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public ReviewsService(ReviewsRepository reviewsRepository, ModelMapper modelMapper) {
+    public ReviewsService(ReviewsRepository reviewsRepository,
+                          ModelMapper modelMapper,
+                          UserRepository userRepository) {
         this.reviewsRepository = reviewsRepository;
         this.modelMapper = modelMapper;
+        this.userRepository=userRepository;
     }
 
 
@@ -38,8 +45,11 @@ public class ReviewsService implements IReviews {
 
     @Override
     public ReviewsDtoResponse addReview(ReviewsDto reviewsDto) {
-        Reviews reviewToAdd = modelMapper.map(reviewsDto, Reviews.class);
-        Reviews savedReview = reviewsRepository.save(reviewToAdd);
+        String email = SecurityUtil.getSessionUser();
+        User user = userRepository.findByEmail(email).get();
+        Reviews review = modelMapper.map(reviewsDto, Reviews.class);
+        review.setUser(user);
+        Reviews savedReview = reviewsRepository.save(review);
         return modelMapper.map(savedReview, ReviewsDtoResponse.class);
     }
 
