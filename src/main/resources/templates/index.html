@@ -441,10 +441,22 @@
             <p class="text-gray-500">Send</p>
           </span>
         </div>
+
+        <!-- Nttttttttttttttttttttttttt Comments area-->
+
+
+
+
         <div class="flex w-full gap-2 items-center">
-            <img class="w-10 h-10 rounded-full" src="https://media.licdn.com/dms/image/D4E35AQHR0vFObGXDqg/profile-framedphoto-shrink_100_100/0/1703843866524?e=1707296400&v=beta&t=oWRf-lEVyEDpAeNh54ssIDputgbH87e5sx3bKSm-3kA">
-            <input class="w-full rounded-full p-2  border" type="text" placeholder="Add a comment...">
+            <form action="#" th:action="@{/reviews/add-review}" th:object="${reviewsDto}" method="post">
+                <img class="w-10 h-10 rounded-full" src="https://media.licdn.com/dms/image/D4E35AQHR0vFObGXDqg/profile-framedphoto-shrink_100_100/0/1703843866524?e=1707296400&v=beta&t=oWRf-lEVyEDpAeNh54ssIDputgbH87e5sx3bKSm-3kA" />
+                <input class="w-full rounded p-2 border" th:field="*{message}" placeholder="Add a comment..." />
+                <button type="submit">Submit</button>
+            </form>
         </div>
+
+
+
 
         <!-- Comments area-->
         <div class="w-full ">
