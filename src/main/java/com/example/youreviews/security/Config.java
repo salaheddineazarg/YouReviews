@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -37,8 +38,14 @@ public class Config  {
         return new BCryptPasswordEncoder();
     }
     @Bean
-    public UserDetailsService userDetailsService() throws EmailNotFoundException {
-        return email -> userRepository.findUserByEmail(email)
-                .orElseThrow(() -> new EmailNotFoundException("User not found"));
+    public UserDetailsService userDetailsService()  {
+        return username -> {
+            try {
+                return userRepository.findByEmail(username)
+                        .orElseThrow(() -> new EmailNotFoundException("User not found"));
+            } catch (EmailNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        };
     }
 }
