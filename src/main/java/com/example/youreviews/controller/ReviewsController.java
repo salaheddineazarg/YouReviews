@@ -3,16 +3,15 @@ package com.example.youreviews.controller;
 
 import com.example.youreviews.dto.Reviews.ReviewsDto;
 import com.example.youreviews.dto.User.UserDto;
+import com.example.youreviews.enumeration.TypeReaction;
 import com.example.youreviews.service.Interfaces.IReviews;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 
 
 @Controller
@@ -36,13 +35,18 @@ public class ReviewsController {
     }
 
     @PostMapping("/addReview")
-    public String addReview(@Valid ReviewsDto reviewsDto, BindingResult result) {
-        if (result.hasErrors()) {
-            return "add-review";
-        }
+    public String addReview(@RequestParam("message") String message) {
+
+        ReviewsDto reviewsDto = new ReviewsDto();
+        reviewsDto.setMessage(message);
+        reviewsDto.setTitre("Static Title");
+        reviewsDto.setDate(LocalDateTime.now());
+        reviewsDto.setReaction(TypeReaction.Like);
+
         service.addReview(reviewsDto);
-        return "index";
-  }
+
+        return "redirect:/index";
+    }
 
     @PostMapping("/updateReview")
     public String updateReview(@Valid ReviewsDto reviewsDto, BindingResult result) {
