@@ -3,11 +3,9 @@ package com.example.youreviews.service.Impl;
 
 import com.example.youreviews.dto.Reviews.ReviewsDto;
 import com.example.youreviews.dto.Reviews.ReviewsDtoResponse;
-import com.example.youreviews.dto.User.UserDtoResponse;
 import com.example.youreviews.entities.Reviews;
 import com.example.youreviews.repositories.ReviewsRepository;
 import com.example.youreviews.service.Interfaces.IReviews;
-import com.example.youreviews.service.Interfaces.IUser;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -18,11 +18,6 @@ public class AuthenticationController {
         return "login";
     }
 
-   /* @PostMapping
-    public String login(){
-
-        return "redirect:/?secussful";
-    }*/
 
 
 }
