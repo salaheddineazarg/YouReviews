@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-@RequestMapping("/api/reviews")
+@RequestMapping("/reviews")
 public class ReviewsController {
 
 
@@ -28,35 +28,35 @@ public class ReviewsController {
     }
 
 
-    @GetMapping(path = "/hello")
+    @GetMapping
     public String getAll(Model model){
-        model.addAttribute("all",service.getAll());
+        model.addAttribute("reviews",service.getAll());
 
         return "index";
     }
 
-    @PostMapping("/addReview")
+    @PostMapping
     public String addReview(@Valid ReviewsDto reviewsDto, BindingResult result) {
         if (result.hasErrors()) {
-            return "add-review";
+            return "redirect:/";
         }
         service.addReview(reviewsDto);
-        return "index";
+        return "redirect:/";
   }
 
-    @PostMapping("/updateReview")
+    @PostMapping
     public String updateReview(@Valid ReviewsDto reviewsDto, BindingResult result) {
         if (result.hasErrors()) {
-            return "update-review";
+            return "redirect:/";
         }
         service.updateReview(reviewsDto);
-        return "index";
+        return "redirect:/";
     }
 
     @PostMapping("/deleteReview/{id}")
     public String deleteReview(@PathVariable("id") Long id) {
         service.deleteReviewById(id);
-        return "index";
+        return "redirect:/";
     }
 
 
