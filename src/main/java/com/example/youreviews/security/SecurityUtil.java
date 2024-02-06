@@ -15,6 +15,7 @@ public class SecurityUtil {
             String currentUserName = authentication.getName();
 
             return currentUserName;
+
         }
         return null;
     }

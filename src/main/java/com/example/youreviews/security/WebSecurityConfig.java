@@ -3,6 +3,7 @@ package com.example.youreviews.security;
 
 import com.example.youreviews.repositories.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,7 +20,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @AllArgsConstructor
 public class WebSecurityConfig {
 
- private final AuthenticationProvider authenticationProvider;
+    private final AuthenticationProvider authenticationProvider;
 
     @Bean
     public SecurityFilterChain defaultFilterChain(HttpSecurity http) throws Exception {
@@ -41,8 +42,6 @@ public class WebSecurityConfig {
                 );
         return http.build();
     }
-
-
 
 
 
