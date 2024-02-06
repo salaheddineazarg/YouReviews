@@ -2,11 +2,12 @@ package com.example.youreviews.controller;
 
 
 import com.example.youreviews.dto.Reviews.ReviewsDto;
-<<<<<<< HEAD
-=======
 import com.example.youreviews.dto.User.UserDto;
 import com.example.youreviews.enumeration.TypeReaction;
->>>>>>> c5ec7c2054de3a25dc0e180997aff6a9858edea1
+
+import com.example.youreviews.dto.User.UserDto;
+import com.example.youreviews.enumeration.TypeReaction;
+
 import com.example.youreviews.service.Interfaces.IReviews;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.UUID;
+
 import java.time.LocalDateTime;
 
 
@@ -38,6 +41,7 @@ public class ReviewsController {
 
         return "index";
     }
+
 
 
     @PostMapping("/add-review")
