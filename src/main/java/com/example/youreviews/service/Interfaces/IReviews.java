@@ -5,6 +5,7 @@ import com.example.youreviews.dto.Reviews.ReviewsDtoResponse;
 import com.example.youreviews.entities.Reviews;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface IReviews {
 
@@ -12,10 +13,10 @@ public interface IReviews {
 
     ReviewsDtoResponse addReview(ReviewsDto reviewsDto);
 
-    ReviewsDtoResponse updateReview(ReviewsDto reviewsDto);
+    ReviewsDtoResponse updateReview(ReviewsDto reviewsDto,UUID id);
 
-    ReviewsDtoResponse getReviewById(Long id);
+    ReviewsDtoResponse getReviewById(UUID id);
 
-    int deleteReviewById(Long id);
+    int deleteReviewById(UUID id);
 }
 

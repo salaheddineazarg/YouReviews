@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,8 +55,8 @@ public class ReviewsService implements IReviews {
     }
 
     @Override
-    public ReviewsDtoResponse updateReview(ReviewsDto reviewsDto) {
-        Optional<Reviews> optionalReview = reviewsRepository.findById(reviewsDto.getId());
+    public ReviewsDtoResponse updateReview(ReviewsDto reviewsDto,UUID id) {
+        Optional<Reviews> optionalReview = reviewsRepository.findById(id);
 
         if (optionalReview.isPresent()) {
             Reviews reviewToUpdate = optionalReview.get();
@@ -73,14 +74,14 @@ public class ReviewsService implements IReviews {
 
 
     @Override
-    public int deleteReviewById(Long id) {
+    public int deleteReviewById(UUID id) {
         reviewsRepository.deleteById(id);
         return 1;
     }
 
 
     @Override
-    public ReviewsDtoResponse getReviewById(Long id) {
+    public ReviewsDtoResponse getReviewById(UUID id) {
         return null;
     }
 }

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css"  rel="stylesheet" />
     <title>Linkedin</title>
 </head>
 <body>
@@ -202,13 +203,10 @@
             <div class="pt-6">
                 <a
                         class="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl"
-                        href="#"
-                >Sign in</a
+                        th:href="@{/logout}"
+                >Logout</a
                 >
-                <a
-                        class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700 rounded-xl"
-                        href="#"
-                >Sign Up</a
+
                 >
             </div>
             <p class="my-4 text-xs text-center text-gray-400">
@@ -218,7 +216,7 @@
     </nav>
 </div>
 
-<section class="bg-[#F4F2EE] flex pt-4 justify-evenly w-full">
+<section class="bg-[#F4F2EE] flex pt-4 pb-30 justify-evenly w-full">
     <!-- Card Profile -->
     <div
             class="bg-white shadow-xl sticky top-4 h-full w-[230px] rounded-lg text-gray-900"
@@ -256,7 +254,7 @@
 
     <!-- Post -->
     <div
-            class="w-[555px] bg-white space-y-6 p-4 rounded-md h-full border border-gray-300"
+            class="w-[555px]  bg-white space-y-6 p-4  pb-10 rounded-md h-full border border-gray-300"
     >
         <!-- Profile -->
         <div class="w-full flex gap-4">
@@ -313,14 +311,15 @@
 
                 <p class="text-gray-500 font-normal text-sm">56 Other</p>
             </div>
-            <p class="text-gray-500 font-normal text-sm">8 comment</p>
+
+          <p  id="commentButton" class="text-gray-500 cursor-pointer hover: font-normal text-sm">8 comment</p>
         </div>
 
         <div class="w-full flex justify-between">
           <span
                   class="flex items-center w-[112px] h-[48px] gap-2 hover:bg-gray-200 rounded-md justify-center "
           >
-              <button id="like">
+              <button id="like" class="flex gap-2">
             <svg
                     class="w-6 h-6"
                     viewBox="0 0 20 20"
@@ -447,19 +446,37 @@
         </div>
 
         <!-- Comments area-->
-        <div class="w-full ">
+        <div id="commentArea"  class="w-full hidden h-[200px] ">
 
-            <div class="flex gap-2 items-start">
+            <div class="flex gap-2 items-start ">
                 <img class="w-10 h-10 rounded-full" src="https://media.licdn.com/dms/image/D5603AQG_784vkse_YA/profile-displayphoto-shrink_400_400/0/1679180108547?e=1712188800&v=beta&t=NBKH09xtEOfYTqMXJ1Ej1MXWOCn632TAKDpHMsMks2s" alt="">
                 <div class="bg-[#F2F2F2] space-y-3 rounded-md  w-full p-2">
-                    <div class="flex flex-col pl-2 relative">
+                    <div class="flex flex-col pl-2 relative relative">
                         <h4 class="font-semibold font-poppins text-black text-sm">Kamal el harite</h4>
 
                         <p class="font-light text-sm w-[85%] text-gray-500 truncate">
                             Full stack Java Developer ( Spring boot | Angular ) @Youcode (
                             Simplon.co )
                         </p>
-                        <svg class="absolute left-[90%] top-0" fill="#000000" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" transform="rotate(90)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M12,7a2,2,0,1,0-2-2A2,2,0,0,0,12,7Zm0,10a2,2,0,1,0,2,2A2,2,0,0,0,12,17Zm0-7a2,2,0,1,0,2,2A2,2,0,0,0,12,10Z"></path></g></svg>
+                        <button  id="buttonDropDown">
+                        <svg class="absolute left-[94%]  w-[22px] top-0" fill="#4c4c4c" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" transform="rotate(90)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M12,7a2,2,0,1,0-2-2A2,2,0,0,0,12,7Zm0,10a2,2,0,1,0,2,2A2,2,0,0,0,12,17Zm0-7a2,2,0,1,0,2,2A2,2,0,0,0,12,10Z"></path></g></svg>
+                        </button>
+                        <div  id="DropDown" class="z-10 absolute top-[19px] left-[62%] hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
+                                <li>
+                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                     <span class="p-1 font-normal text-sm ">
                     Rak ghaya akhay zin
@@ -482,6 +499,36 @@
     </div>
 </section>
 
-<script src="../static/js/main.js"></script>
+<script >
+    let button = document.getElementById("buttonDropDown");
+    let dropDown=document.getElementById("DropDown");
+    let buttonComment = document.getElementById("commentButton")
+    let CommentArea = document.getElementById("commentArea")
+
+
+
+    button.addEventListener("click",ShowdropDown)
+    function ShowdropDown(){
+        if(dropDown.classList.contains("hidden")){
+            dropDown.classList.replace("hidden","block");
+        }
+        else if (dropDown.classList.contains("block")) {
+            dropDown.classList.replace("block","hidden");
+        }
+    }
+
+    buttonComment.addEventListener("click",ShowCommentArea)
+
+
+    function ShowCommentArea(){
+        if(CommentArea.classList.contains("hidden")){
+            CommentArea.classList.replace("hidden","block");
+        }
+        else if (CommentArea.classList.contains("block")) {
+            CommentArea.classList.replace("block","hidden");
+        }
+    }
+</script>
+
 </body>
 </html>

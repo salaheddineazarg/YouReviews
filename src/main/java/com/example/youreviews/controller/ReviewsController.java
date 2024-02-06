@@ -2,7 +2,6 @@ package com.example.youreviews.controller;
 
 
 import com.example.youreviews.dto.Reviews.ReviewsDto;
-import com.example.youreviews.dto.User.UserDto;
 import com.example.youreviews.service.Interfaces.IReviews;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.UUID;
 
 
 @Controller
@@ -35,26 +35,26 @@ public class ReviewsController {
         return "index";
     }
 
-    @PostMapping
+    @PostMapping("add-review")
     public String addReview(@Valid ReviewsDto reviewsDto, BindingResult result) {
         if (result.hasErrors()) {
-            return "redirect:/";
+            return "redirect:/?error";
         }
         service.addReview(reviewsDto);
         return "redirect:/";
   }
 
     @PostMapping
-    public String updateReview(@Valid ReviewsDto reviewsDto, BindingResult result) {
+    public String updateReview(@Valid ReviewsDto reviewsDto,UUID id,BindingResult result) {
         if (result.hasErrors()) {
-            return "redirect:/";
+            return "redirect:/error";
         }
-        service.updateReview(reviewsDto);
+        service.updateReview(reviewsDto,id);
         return "redirect:/";
     }
 
     @PostMapping("/deleteReview/{id}")
-    public String deleteReview(@PathVariable("id") Long id) {
+    public String deleteReview(@PathVariable("id") UUID id) {
         service.deleteReviewById(id);
         return "redirect:/";
     }
