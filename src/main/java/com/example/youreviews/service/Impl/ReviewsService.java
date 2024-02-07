@@ -5,6 +5,7 @@ import com.example.youreviews.dto.Reviews.ReviewsDto;
 import com.example.youreviews.dto.Reviews.ReviewsDtoResponse;
 import com.example.youreviews.entities.Reviews;
 import com.example.youreviews.entities.User;
+import com.example.youreviews.enumeration.TypeReaction;
 import com.example.youreviews.repositories.ReviewsRepository;
 import com.example.youreviews.repositories.UserRepository;
 import com.example.youreviews.security.SecurityUtil;
@@ -13,6 +14,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -50,6 +53,9 @@ public class ReviewsService implements IReviews {
         User user = userRepository.findByEmail(email).get();
         Reviews review = modelMapper.map(reviewsDto, Reviews.class);
         review.setUser(user);
+        review.setTitre("comment");
+        review.setReaction(TypeReaction.Comment);
+        review.setDate(LocalDateTime.now());
         Reviews savedReview = reviewsRepository.save(review);
         return modelMapper.map(savedReview, ReviewsDtoResponse.class);
     }

@@ -1,17 +1,13 @@
 package com.example.youreviews.security;
 
-import com.example.youreviews.entities.User;
 import com.example.youreviews.exception.EmailNotFoundException;
 import com.example.youreviews.repositories.UserRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
@@ -39,9 +35,9 @@ public class Config  {
     }
     @Bean
     public UserDetailsService userDetailsService()  {
-        return username -> {
+        return email -> {
             try {
-                return userRepository.findByEmail(username)
+                return userRepository.findByEmail(email)
                         .orElseThrow(() -> new EmailNotFoundException("User not found"));
             } catch (EmailNotFoundException e) {
                 throw new RuntimeException(e);

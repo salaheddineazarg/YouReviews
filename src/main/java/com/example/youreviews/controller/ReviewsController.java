@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 
 
 @Controller
-@RequestMapping("/reviews")
+@RequestMapping("/")
 public class ReviewsController {
 
 
@@ -32,13 +32,15 @@ public class ReviewsController {
     public ReviewsController(IReviews service){
 
         this.service=service;
+
     }
 
 
     @GetMapping
     public String getAll(Model model){
-        model.addAttribute("reviews",service.getAll());
 
+        model.addAttribute("reviews",service.getAll());
+        model.addAttribute("review", new ReviewsDto());
         return "index";
     }
 
@@ -47,15 +49,11 @@ public class ReviewsController {
     @PostMapping("/add-review")
     public String addReview(@Valid @ModelAttribute ReviewsDto reviewsDto, BindingResult result) {
         if (result.hasErrors()) {
-            return "add-review";
+            return "redirect:/?fail";
         } else {
-            reviewsDto.setTitre("Static Title");
-            reviewsDto.setDate(LocalDateTime.now());
-            reviewsDto.setReaction(TypeReaction.Comment);
-
             service.addReview(reviewsDto);
 
-            return "redirect:/";
+            return "redirect:/?seccussful";
         }
     }
 
