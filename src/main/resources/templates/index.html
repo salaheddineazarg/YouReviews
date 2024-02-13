@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://thymeleaf.org" >
+<html lang="en" xmlns="http://thymeleaf.org"  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" >
 <head>
     <meta charset="UTF-8" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -246,7 +246,7 @@
         >
             <img
                     class="object-cover h-full"
-                    src="https://media.licdn.com/dms/image/D4E35AQHR0vFObGXDqg/profile-framedphoto-shrink_100_100/0/1703843866524?e=1707296400&v=beta&t=oWRf-lEVyEDpAeNh54ssIDputgbH87e5sx3bKSm-3kA"
+                    src="https://media.licdn.com/dms/image/D4E35AQHR0vFObGXDqg/profile-framedphoto-shrink_100_100/0/1703843866524?e=1708333200&v=beta&t=hvWO3JN0ooojv_2HGXztRu0j55vuSfLVA_uCK4ozH9c"
                     alt="Woman looking front"
             />
         </div>
@@ -273,7 +273,7 @@
         <div class="w-full flex gap-4">
             <img
                     class="w-12 h-12 rounded-full"
-                    src="https://media.licdn.com/dms/image/D4E35AQHR0vFObGXDqg/profile-framedphoto-shrink_100_100/0/1703843866524?e=1707296400&v=beta&t=oWRf-lEVyEDpAeNh54ssIDputgbH87e5sx3bKSm-3kA"
+                    src="https://media.licdn.com/dms/image/D4E35AQHR0vFObGXDqg/profile-framedphoto-shrink_100_100/0/1703843866524?e=1708333200&v=beta&t=hvWO3JN0ooojv_2HGXztRu0j55vuSfLVA_uCK4ozH9c"
                     alt=""
             />
             <div class="flex flex-col">
@@ -325,7 +325,7 @@
                 <p class="text-gray-500 font-normal text-sm">56 Other</p>
             </div>
 
-          <p  id="commentButton" class="text-gray-500 cursor-pointer hover: font-normal text-sm">8 comment</p>
+          <p  th:text="${reviews.size()+' comments'}" id="commentButton" class="text-gray-500 cursor-pointer hover: font-normal text-sm"></p>
         </div>
 
         <div class="w-full flex justify-between">
@@ -459,9 +459,9 @@
 
 
 
-        <form method="post" th:action="@{/add-review}" th:object="${review}" class="flex w-full gap-2 items-center">
+        <form sec:authorize="hasAuthority('Client')" method="post" th:action="@{/add-review}" th:object="${reviewDto}" class="flex w-full gap-2 items-center">
 
-                <img class="w-10 h-10 rounded-full" src="https://media.licdn.com/dms/image/D4E35AQHR0vFObGXDqg/profile-framedphoto-shrink_100_100/0/1703843866524?e=1707296400&v=beta&t=oWRf-lEVyEDpAeNh54ssIDputgbH87e5sx3bKSm-3kA" />
+                <img class="w-10 h-10 rounded-full" src="https://media.licdn.com/dms/image/D4E03AQGstgMskw7nuw/profile-displayphoto-shrink_400_400/0/1707404573012?e=1713398400&v=beta&t=otXLm58Q1LNqPAh2vOe3e1s6wX8sIIMX3y3UGHFEcys" />
                 <input class="w-full rounded-full p-2 border" th:field="*{message}"  placeholder="Add a comment..." />
 
             <input type="submit" class="hidden" />
@@ -471,48 +471,63 @@
 
 
         <!-- Comments area-->
-        <div id="commentArea"  class="w-full hidden h-[200px] ">
+        <div id="commentArea"  class="w-full space-y-4 overflow-y-scroll hidden h-[200px] ">
 
-            <div class="flex gap-2 items-start ">
-                <img class="w-10 h-10 rounded-full" src="https://media.licdn.com/dms/image/D5603AQG_784vkse_YA/profile-displayphoto-shrink_400_400/0/1679180108547?e=1712188800&v=beta&t=NBKH09xtEOfYTqMXJ1Ej1MXWOCn632TAKDpHMsMks2s" alt="">
+            <div th:each="review :${reviews}" class="flex  relative gap-2 items-start ">
+                <img class="w-10 h-10 rounded-full"  src="https://media.licdn.com/dms/image/D4E03AQGstgMskw7nuw/profile-displayphoto-shrink_400_400/0/1707404573012?e=1713398400&v=beta&t=otXLm58Q1LNqPAh2vOe3e1s6wX8sIIMX3y3UGHFEcys" alt="">
                 <div class="bg-[#F2F2F2] space-y-3 rounded-md  w-full p-2">
                     <div class="flex flex-col pl-2 relative relative">
-                        <h4 class="font-semibold font-poppins text-black text-sm">Kamal el harite</h4>
+                        <h4 th:text="${review.user.fullName}" class="font-semibold font-poppins text-black text-sm"></h4>
 
                         <p class="font-light text-sm w-[85%] text-gray-500 truncate">
                             Full stack Java Developer ( Spring boot | Angular ) @Youcode (
                             Simplon.co )
                         </p>
-                        <button  id="buttonDropDown">
+                        <button  th:if="${#authorization.expression('hasAnyAuthority(''Client'')') and (currentUserName == review.user.email)}" class="buttonDropDown">
                         <svg class="absolute left-[94%]  w-[22px] top-0" fill="#4c4c4c" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" transform="rotate(90)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M12,7a2,2,0,1,0-2-2A2,2,0,0,0,12,7Zm0,10a2,2,0,1,0,2,2A2,2,0,0,0,12,17Zm0-7a2,2,0,1,0,2,2A2,2,0,0,0,12,10Z"></path></g></svg>
                         </button>
-                        <div  id="DropDown" class="z-10 absolute top-[19px] left-[62%] hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                        <div   class="z-10 DropDown absolute top-[19px] left-[62%] hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
-                                <li>
-                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                                <li sec:authorize="hasAnyAuthority('Client','Super_Admin')">
+                                    <a th:if="${#authorization.expression('hasAnyAuthority(''Client'')') and (currentUserName == review.user.email)}"
+                                       class="block px-4 py-2 editbutton hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                        Edit
+                                    </a>
                                 </li>
-                                <li>
-                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+
+                                <li sec:authorize="hasAnyAuthority('Client','Super_Admin')" >
+                                    <a th:if="${#authorization.expression('hasAnyAuthority(''Client'')') and (currentUserName == review.user.email)}"  th:href="@{/delete/{id}(id=${review.id})}"   class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
                                 </li>
-                                <li>
-                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
+                                <li sec:authorize="hasAuthority('Moderator')" >
+                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Signiale</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
-                    <span class="p-1 font-normal text-sm ">
-                    Rak ghaya akhay zin
+
+                    <span    th:text="${review.message}" class="p-1 spanMessage block font-normal text-sm ">
+
                   </span>
+                    <form  class=" w-full gap-2 formEdit hidden flex flex-col " th:object="${reviewDto}" th:action="@{/update/{id}(id=${review.id})}" method="post">
+                        <input type="text" class="w-full outline-none bg-[#F2F2F2] rounded-md border-none" th:value="${review.message}"  name="message" />
+                        <div class="flex items-center gap-2">
+                        <button
+                                type="submit"
+                                class="inline-block rounded bg-black w-[100px] px-6 pb-1 pt-1 text-xs font-medium uppercase leading-normal text-white">
+                            Edit
+                        </button>
+                            <button
+                                    type="button"
+                                    class="inline-block rounded bg-gray-300 w-[100px] px-6 pb-1 pt-1 text-xs font-medium uppercase leading-normal text-white">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+
                 </div>
             </div>
 
         </div>
-
-
-
     </div>
 
     <div>
@@ -525,26 +540,28 @@
 </section>
 
 <script >
-    let button = document.getElementById("buttonDropDown");
-    let dropDown=document.getElementById("DropDown");
+    let buttons = document.getElementsByClassName("buttonDropDown");
+    let dropDowns = document.getElementsByClassName("DropDown");
     let buttonComment = document.getElementById("commentButton")
     let CommentArea = document.getElementById("commentArea")
+    let editButtons = document.getElementsByClassName("editbutton");
+    let formEdits = document.getElementsByClassName("formEdit");
+    let spanMessages = document.getElementsByClassName("spanMessage");
 
 
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener("click", function (e) {
+            let dropDown = dropDowns[i];
 
-    button.addEventListener("click",ShowdropDown)
-    function ShowdropDown(){
-        if(dropDown.classList.contains("hidden")){
-            dropDown.classList.replace("hidden","block");
-        }
-        else if (dropDown.classList.contains("block")) {
-            dropDown.classList.replace("block","hidden");
-        }
+            if (dropDown.classList.contains("hidden")) {
+                dropDown.classList.replace("hidden", "block");
+            } else if (dropDown.classList.contains("block")) {
+                dropDown.classList.replace("block", "hidden");
+            }
+        });
     }
 
     buttonComment.addEventListener("click",ShowCommentArea)
-
-
     function ShowCommentArea(){
         if(CommentArea.classList.contains("hidden")){
             CommentArea.classList.replace("hidden","block");
@@ -552,6 +569,21 @@
         else if (CommentArea.classList.contains("block")) {
             CommentArea.classList.replace("block","hidden");
         }
+    }
+
+    for (let i = 0; i < editButtons.length; i++) {
+        editButtons[i].addEventListener("click", function (e) {
+            let formEdit = formEdits[i];
+            let spanMessage = spanMessages[i];
+
+            if (formEdit.classList.contains("hidden")) {
+                formEdit.classList.replace("hidden", "block");
+                spanMessage.classList.replace("block", "hidden");
+            } else if (formEdit.classList.contains("block")) {
+                formEdit.classList.replace("block", "hidden");
+                spanMessage.classList.replace("hidden", "block");
+            }
+        });
     }
 </script>
 

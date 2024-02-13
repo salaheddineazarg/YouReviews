@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -40,11 +41,10 @@ public class ReviewsService implements IReviews {
 
     @Override
     public List<ReviewsDtoResponse> getAll() {
-       List<Reviews> reviewsList = reviewsRepository.findAll();
-        List<ReviewsDtoResponse> dtoResponseList = reviewsList.stream()
-                .map(review -> modelMapper.map(review, ReviewsDtoResponse.class))
-                .collect(Collectors.toList());
-        return dtoResponseList;
+
+
+
+        return Arrays.asList(modelMapper.map(reviewsRepository.findAll(),ReviewsDtoResponse[].class));
     }
 
     @Override
@@ -56,6 +56,7 @@ public class ReviewsService implements IReviews {
         review.setTitre("comment");
         review.setReaction(TypeReaction.Comment);
         review.setDate(LocalDateTime.now());
+        System.out.println(review.getDate());
         Reviews savedReview = reviewsRepository.save(review);
         return modelMapper.map(savedReview, ReviewsDtoResponse.class);
     }
@@ -65,11 +66,11 @@ public class ReviewsService implements IReviews {
         Optional<Reviews> optionalReview = reviewsRepository.findById(id);
 
         if (optionalReview.isPresent()) {
+
             Reviews reviewToUpdate = optionalReview.get();
-            reviewToUpdate.setTitre(reviewsDto.getTitre());
             reviewToUpdate.setMessage(reviewsDto.getMessage());
-            reviewToUpdate.setDate(reviewsDto.getDate());
-            reviewToUpdate.setReaction(reviewsDto.getReaction());
+            reviewToUpdate.setDate(LocalDateTime.now());
+            reviewToUpdate.setId(id);
 
             Reviews updatedReview = reviewsRepository.save(reviewToUpdate);
             return modelMapper.map(updatedReview, ReviewsDtoResponse.class);

@@ -23,9 +23,9 @@ public class UserController {
   {
       User user = new User();
       user.setPassword(passwordEncoder.encode("12345"));
-      user.setUserRole(UserRole.Client);
-      user.setFullName("salaheddine");
-      user.setEmail("salah@gmail.com");
+      user.setUserRole(UserRole.Moderator);
+      user.setFullName("kamal");
+      user.setEmail("kamal@gmail.com");
       userRepository.save(user);
       return "login";
   }
