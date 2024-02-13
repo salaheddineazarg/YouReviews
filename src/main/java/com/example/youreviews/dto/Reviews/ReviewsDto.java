@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -21,24 +22,19 @@ import java.time.LocalDateTime;
 public class ReviewsDto {
 
 
-    private Long id;
+    private UUID id;
 
-    @NotBlank(message = "Title is required")
+
     private String titre;
 
     @NotBlank(message = "Message is required")
     private String message;
 
-    @NotNull(message = "Date is required")
-    @FutureOrPresent(message = "Date must be in the present or future")
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime date;
 
-    @NotNull(message = "Reaction type is required")
-    @Enumerated(EnumType.STRING)
+
     private TypeReaction reaction;
 
-    @NotNull(message = "User ID is required")
-    @Positive(message = "User ID must be a positive number")
+
     private Long user_id;
 }

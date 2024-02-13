@@ -8,13 +8,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
 
-    private Long id;
+    private UUID id;
 
     @NotBlank(message = "Full name is required")
     @Size(max = 255, message = "Full name must be less than or equal to 255 characters")

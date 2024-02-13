@@ -32,7 +32,6 @@ public class Reviews {
     private String message;
 
     @NotNull(message = "Date is required")
-    @FutureOrPresent(message = "Date must be in the present or future")
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime date;
 
